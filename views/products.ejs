@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Results</title>
+
+  <!-- Favicon-->
+  <link rel="icon" href="images/favicon.ico" />
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat|Ubuntu" rel="stylesheet">
+
+  <!-- CSS Stylesheets -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <!-- <link rel="stylesheet" href="css/styles.css"> -->
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/products.css">
+
+
+  <!-- Font Awesome -->
+  <script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
+
+  <!-- Bootstrap Scripts -->
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+  <section class="title-section" id="products-title">
+
+    <div class="container">
+
+      <!-- Nav Bar -->
+
+      <nav class="navbar navbar-expand-lg navbar-dark">
+        <a class="navbar-brand" href="/"><span class="dealer">Dealer</span>.Guy</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+          <ul class="navbar-nav ml-auto text-right">  
+            <li class="nav-item">
+              <a class="nav-link" href="#contact">CONTACT</a>
+            </li>
+
+            <% if(!locals.user) { %> 
+
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="modal" data-target="#loginModal">
+                  <i class="fa fa-user fa-lg" aria-hidden="true">
+
+                  </i>
+              </a>
+           </li>
+
+          <% } else {%>
+
+          <li class="nav-item">
+              <a class="nav-link">
+                <div class="dropdown ">
+                  <i class="fa fa-user fa-lg" aria-hidden="true"></i>
+                    <div class="dropdown-content text-right">
+                      <a class="first" href="profile">My Profile</a>
+                      <a class="second" href="signout">Sign Out</a>
+
+                    </div>
+                </div>
+              </a>
+          </li>
+
+          <% } %>
+          </ul>
+
+        </div>
+
+      </nav>
+
+      <!-- Title -->
+
+      <div class="row">
+        <div class="col-12">
+            <!-- <h1 class="big-heading text-left" style="font-family: montserrat,sans-serif"> We have found <%= related.length %> results for "<%= productName %>" </h1> -->
+            <h3 class="big-heading text-center"> You can always search for other products, it's ok! </h3>
+            <div class="search-box container">
+              <form class="form-inline" action="/products" method="POST" id="search-form">
+                <div class="form-group">
+                      <div class="input-group">
+                        <input class="form-control" type="search" name="productName" placeholder="Search"
+                          aria-label="Search" required="required" 
+                          oninput="this.setCustomValidity('')" oninvalid="this.setCustomValidity('Please enter a valid product')" >
+                        <button class="search btn btn-dark pr-3 pl-3" type="submit"><i class="fas fa-search"></i></button>
+
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- Features -->
+
+  <section class="white-section" id="products">
+    <div class="container">
+        <h2>We have found <%= related.length %> results for "<%= productName %>"</h2>
+        <hr>
+                <div class="row">
+                    <% for(i = 0 ; i < related.length ; i++) { %>
+                        <div class="pricing-column col-lg-3 col-md-4">
+                            <div class="card .h-100">
+                                <div class="card-header">
+                                    <h4> <%= related[i] %> </h4>
+                                </div>
+                                <div class="card-body">
+                                  <div class="img-div">
+                                    <div class="card-img-top">
+                                      <img src="<%= images[i] %>" alt="<%= related[i] %>" height="180" style="width: 60%;">
+                                    </div>
+                                  </div>
+                                   <div class="push-down"></div>
+                                    <hr class="hr-space">
+                                    <!-- <p class="card-text"> <%= related.length %> results</p> -->
+                                    <p class="card-text"> 10 results</p>
+                                    <form action="/results" method="POST">
+                                        <input type="hidden" id="1" name="productName" value="<%= related[i] %>">
+                                        <button class="btn btn-lg btn-block btn-outline-dark" type="submit">View More</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                    <% } %>   
+                </div>    
+          </div>
+  </section>
+
+
+
+  <!-- Contact Section -->
+
+  <section class="contact-section" id="contact">
+    <h2 class="section-heading">CONTACT US</h2>
+
+    <div class="container">
+      <div class="pricing-column">
+        <div class="card">
+          <div class="card-header">
+            <h3>Send us a message!</h3>
+          </div>
+          <div class="card-body">
+            <form action="/contact" method="POST" id="contact-form">
+              <input class="form-control sm-2 pt-2 pb-2 mb-4" type="text" name="fullname" placeholder="Full Name"
+                aria-label="Full Name" required="required" 
+                oninput="this.setCustomValidity('')" oninvalid="this.setCustomValidity('Full name is empty')">
+              <input class="form-control sm-2 pt-2 pb-2 mb-4" type="text" name="phone" placeholder="Phone Number"
+                aria-label="Phone Number">
+              <input class="form-control sm-2 pt-2 pb-2 mb-4" type="email" name="email" id="exampleInputEmail1"
+                aria-describedby="emailHelp" placeholder="Enter email" required>
+              <textarea class="form-control sm-2 pt-2 pb-2 mb-4" rows="4" type="text" name="message"
+                placeholder="Your Message..." required="required" 
+                oninput="this.setCustomValidity('')" oninvalid="this.setCustomValidity('Your message is empty')"></textarea>
+              <button class="btn btn-lg btn-dark" type="submit">Send</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- Footer -->
+
+  <footer class="white-section" id="footer">
+    <div class="container-fluid">
+      <i class="social-icon fab fa-facebook-f fa-2x"></i>
+      <i class="social-icon fab fa-twitter fa-2x"></i>
+      <i class="social-icon fab fa-instagram fa-2x"></i>
+      <i class="social-icon fas fa-envelope fa-2x"></i>
+      <p>© Copyright 2020 DealerGuy</p>
+    </div>
+  </footer>
+
+  <script src="js/index.js"></script>
+
+</body>
+
+</html>

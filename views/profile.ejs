@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+
+
+    <!-- Favicon-->
+    <link rel="icon" href="images/favicon.ico" />
+
+    <!-- CSS Stylesheets -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/profile.css">
+
+    <!-- Font Awesome -->
+    <script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
+
+    <!-- Bootstrap Scripts -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+    <script>
+        $(document).ready(function () {
+
+            var readURL = function (input) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        $('.avatar').attr('src', e.target.result);
+                        document.getElementById("url").value = $('.avatar').attr('src');
+                    }
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+            $(".file-upload").on('change', function () {
+                readURL(this);
+            });
+
+            $("#save").on("click", function () {
+                var src = $('.avatar').attr("src");
+            })
+        });
+    </script>
+
+</head>
+
+<body>
+
+    <div class="container emp-profile">
+        <form action="/profile" method="post">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="profile-img" >
+                        <img src="<%= user.image %>" class="avatar" alt="" style="max-width: 200px; max-height: 180px;" />
+                        <div class="file btn btn-lg btn-primary" >
+                            Change Photo
+                            <input type="file" class="text-center center-block file-upload" name="file">
+                            <input type="hidden" id="url" name="url">
+                        </div>
+                    </div>
+
+        </form>
+
+    </div>
+    <div class="col-md-6">
+        <div class="profile-head">
+            <h3>
+                <%= user.name %>
+            </h3>
+            <p class="proile-rating">NUMBER OF SEARCHES : <span><%= user.history.length %></span></p>
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab"
+                        aria-controls="home" aria-selected="true">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
+                        aria-controls="profile" aria-selected="false">Search History</a>
+                </li>
+                <!-- <li class="nav-item">
+                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#orders" role="tab"
+                        aria-controls="profile" aria-selected="false">Recent Orders</a>
+                </li> -->
+            </ul>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <!-- <input type="submit" class="profile-edit-btn" name="btnAddMore" value="Save Changes"/> -->
+
+        <button type="submit" id="save" class="btn btn-dark mt-2" style="width:140px; height: 50px;">Save
+            Changes</button>
+
+        <form action="/" method="post">
+            <input type="hidden" name="email" value="<%=user.email%>">
+            <button type="submit" class="btn btn-dark mt-2" style="width:140px; height: 50px;">Back Home</button>
+        </form>
+
+
+        <br>
+
+    </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+  
+        </div>
+        <div class="col-md-8">
+            <div class="tab-content profile-tab" id="myTabContent">
+                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                    <div class="row">
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Full Name</label>
+                        </div>
+                        <div class="col-md-6">
+                            <p> <%= user.name %> </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Email Address</label>
+                        </div>
+                        <div class="col-md-6">
+                            <p> <%= user.email %> </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Phone Number</label>
+                        </div>
+                        <div class="col-md-6">
+                            <p> <%= user.phone %> </p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Last Search</label>
+                        </div>
+                        <div class="col-md-6">
+                            <% if(user.history.length === 0) { %>
+                            <p>No Recent Search</p>
+                            <% } else { %>
+                            <p>"<%= user.history[user.history.length - 1].name %>",
+                                <%= user.history[user.history.length - 1].date.slice(0, 15) %></p>
+                            <% } %>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Register Date</label>
+                        </div>
+                        <div class="col-md-6">
+                            <p> <%= user.registerDate %> </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label style="text-decoration: underline">Product Name</label>
+                        </div>
+                        <div class="col-md-6">
+                            <p style="text-decoration: underline">Search Time</p>
+                        </div>
+                    </div>
+
+                    <% if(user.history.length  !== 0) { %>
+                    <% user.history.forEach(function( product, i ){ %>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label><%= user.history[i].name %></label>
+                        </div>
+                        <div class="col-md-6">
+                            <p><%= user.history[i].date %></p>
+                        </div>
+                    </div>
+
+                    <% }) %>
+
+                    <!--                                    
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Availability</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p>6 months</p>
+                                        </div>
+                                    </div> -->
+
+                    <% } %>
+
+                    <!-- <div class="row">
+                                <div class="col-md-12">
+                                    <label>Your Bio</label><br/>
+                                    <p>Your detail description</p>
+                                </div>
+                            </div> -->
+
+                </div>
+<!-- 
+                <div class="tab-pane fade" id="orders" role="tabpanel" aria-labelledby="profile-tab">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label style="text-decoration: underline">Products</label>
+                        </div>
+                        <div class="col-md-4">
+                            <label style="text-decoration: underline">Date</label>
+                        </div>
+                        <div class="col-md-4">
+                            <p style="text-decoration: underline">Prices</p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label>sadsadsadsaddsa</label>
+                        </div>
+                        <div class="col-md-4">
+                            <label>sadsadsadsaddsa</label>
+                        </div>
+                        <div class="col-md-4">
+                            <p>assdasadsad</p>
+                        </div>
+                    </div>
+                    <hr>
+
+                </div> -->
+
+            </div>
+        </div>
+    </div>
+    <!-- </form>            -->
+    </div>
+
+
+</body>
+
+</html>

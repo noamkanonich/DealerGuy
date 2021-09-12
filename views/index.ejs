@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>DealerGuy</title>
+
+  <!-- Favicon-->
+  <link rel="icon" href="/favicon.ico" />
+  <link rel="icon" href="images/favicon.ico" />
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans+Condensed:wght@700&family=Rowdies&display=swap"
+    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+
+  <!-- CSS Stylesheets -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="css/styles.css">
+
+  <!-- Font Awesome -->
+  <script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
+
+  <!-- Bootstrap Scripts -->
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+
+  <section class="colored-section" id="title">
+
+    <div class="container">
+
+      <!-- Nav Bar -->
+
+      <nav class="navbar navbar-expand-lg navbar-dark">
+
+        <a class="navbar-brand" href="/"><span class="dealer">Dealer</span>.Guy</a>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+
+          <ul class="navbar-nav ml-auto text-right">
+            <li class="nav-item">
+              <a class="nav-link" href="#about">ABOUT</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#faq">FAQ</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#contact">CONTACT</a>
+            </li>
+
+            
+             <% if(!locals.user) { %>
+
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="modal" data-target="#loginModal">
+                <i class="fa fa-user fa-lg" aria-hidden="true">
+
+                </i>
+              </a>
+            </li>
+
+            <% } else {%>
+
+            <li class="nav-item">
+              <a class="nav-link">
+                <div class="dropdown ">
+                  <i class="fa fa-user fa-lg" aria-hidden="true"></i>
+                  <div class="dropdown-content text-right">
+                    <a class="first" href="profile">My Profile</a>
+                    <a class="second" href="signout">Sign Out</a>
+
+                  </div>
+                </div>
+
+                <!-- <div class="dropdown">
+                      <i class="fa fa-user fa-lg" aria-hidden="true"></i>
+                      <div class="dropdown-content">
+                          <a class="first" href="profile">My Profile</a>
+                          <a class="second" href="signout">Sign Out</a>
+                      </div>
+                  </div> -->
+              </a>
+            </li>
+
+            <% } %>
+
+            <!-- <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" data-toggle="modal" data-target="#loginModal">
+                <i class="fa fa-user fa-lg" aria-hidden="true"></i>
+              </a>
+            </li> -->
+          </ul>
+        </div>
+      </nav>
+      
+
+      <!-- Login Modal -->
+      <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Log In</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form action="/login" method="POST" id="#loginForm">
+                <div class="form-group">
+                  <input class="form-control" type="email" name="email" id="userEmail" aria-describedby="emailHelp"
+                    placeholder="Email Address" required="required" oninput="this.setCustomValidity('')">
+                </div>
+                <div class="form-group">
+                  <!-- <label for="userPassword">Password</label> -->
+                  <input type="password" class="form-control" name="password" id="userPassword" placeholder="Password"
+                    required="required" oninput="this.setCustomValidity('')">
+                </div>
+                <div class="container text-center">
+                  <button type="submit" class="btn login btn-lg">Log In</button>
+                </div>
+
+              </form>
+              <hr>
+              <div class="container text-center">
+                <p>Not have an account yet? register now!</p>
+                <button type="button" class="btn btn-dark btn-lg" data-dismiss="modal" data-toggle="modal"
+                  data-target="#registerModal">Register</button>
+              </div>
+            </div>
+            <!-- <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary">Save changes</button>
+            </div> -->
+          </div>
+        </div>
+      </div>
+
+
+      <!-- Register Modal -->
+      <div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Sign Up</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form action="/register" method="POST">
+                <div class="form-group">
+                  <!-- <label for="userFullname">Full Name</label> -->
+                  <input class="form-control sm-2 pt-2 pb-2 mb-4" type="text" name="fullname" placeholder="Full Name"
+                    aria-label="Full Name" required="required" oninput="this.setCustomValidity('')"
+                    oninvalid="this.setCustomValidity('')">
+                </div>
+
+                <div class="form-group">
+                  <input class="form-control sm-2 pt-2 pb-2 mb-4" type="text" name="phone" placeholder="Phone Number"
+                    aria-label="Phone Number">
+                </div>
+
+                <div class="form-group">
+                  <input class="form-control sm-2 pt-2 pb-2 mb-4" type="email" name="email" id="exampleInputEmail1"
+                    aria-describedby="emailHelp" placeholder="Enter email" required="required"
+                    oninput="this.setCustomValidity('')">
+                </div>
+
+                <div class="form-group">
+                  <input type="password" class="form-control" name="password" id="userPassword" placeholder="Password"
+                    required="required" oninput="this.setCustomValidity('')"
+                    oninvalid="this.setCustomValidity('Enter a password')">
+                </div>
+                <div class="container text-center">
+                  <button type="submit" class="btn btn-dark btn-lg">Register</button>
+                </div>
+              </form>
+            </div>
+            <!-- <div class="modal-footer">
+              <button type="submit" class="btn btn-dark btn-lg" data-dismiss="modal">Close</button>
+            </div> -->
+          </div>
+        </div>
+      </div>
+
+
+
+      <!-- Title -->
+
+      <div class="row">
+        <div class="col-lg-9">
+          <h1 class="big-heading">Search your desire<br> products now!</h1>
+          <form class="form-inline my-2 my-lg-0" action="/products" method="POST" id="search-form">
+            <div class="form-group">
+              <div class="row">
+                <div class="col-12">
+                  <div class="input-group">
+                    <input class="form-control pd-2 pt-2" type="search" name="productName" placeholder="Search"
+                      aria-label="Search" required="required" oninput="this.setCustomValidity('')"
+                      oninvalid="this.setCustomValidity('Please enter a valid product')" size="40">
+                    <button class="search btn btn-dark pr-3 pl-3" type="submit"><i class="fas fa-search"></i></button>
+
+                  </div>
+
+                </div>
+                <div class="col-md-3 mb-2">
+                  <!-- <button type="submit" class="btn btn-dark search-button my-2 my-sm-0"><i class="fab fa-apple"></i> Search</button> -->
+                </div>
+              </div>
+            </div>
+          </form>
+          <!-- <button type="button" class="btn btn-outline-light btn-lg download-button"><i class="fab fa-google-play"></i> Download</button> -->
+
+        </div>
+        <!-- 
+          <div class="image-container col-lg-3">
+            <span>
+
+              <img class="title-image" src="images/xbox.png" alt="laptop" style="right: 70%; transform: rotate(360deg);">
+              <img class="title-image" src="images/iphone.png" alt="laptop" style="right: 0%; top: 10%;">
+
+            </span> -->
+
+        <!-- <img class="title-image" src="images/xbox.png" alt="laptop" style="right: 100%;"> -->
+
+
+        <!-- <div class="title-images">
+            <img class="xbox" src="images/xbox.png" alt="xbox">
+            <img class="iphone" src="images/iphone.png" alt="iphone">
+          </div> -->
+        <img class="xbox" src="images/xbox.png" alt="xbox">
+        <img class="iphone" src="images/iphone.png" alt="iphone">
+        <img class="drone" src="images/drone.png" alt="drone">
+
+      </div>
+    </div>
+    </div>
+
+  </section>
+
+
+  <!-- Press -->
+
+  <section class="colored-section" id="companies">
+    <img class="companies-logo" src="images/logos/amazon.png" alt="az-logo">
+    <img class="companies-logo" src="images/logos/ebay.png" alt="eb-logo">
+    <img class="companies-logo" src="images/logos/asos.png" alt="as-logo">
+    <img class="companies-logo" src="images/logos/walmart.png" alt="wl-logo">
+  </section>
+
+
+  <!-- Features -->
+
+  <section class="white-section" id="features">
+
+    <div class="container">
+
+      <div class="row">
+        <div class="feature-box col-lg-4">
+          <i class="icon fas fa-gamepad fa-5x"></i>
+          <h3 class="feature-title">Easy To Use</h3>
+          <p>So easy to use, just write your desire <br> product and the magic will happen!</p>
+        </div>
+
+        <div class="feature-box col-lg-4">
+          <i class="icon fas fa-check-circle fa-5x"></i>
+          <h3 class="feature-title">Best Results</h3>
+          <p>We will find you the best results we can <br> find on the web!</p>
+        </div>
+
+        <div class="feature-box col-lg-4">
+          <i class="icon fas fa-heart fa-5x"></i>
+          <h3 class="feature-title">Free Of Charge</h3>
+          <p>It's all free, we only demand <br> a smile from you</p>
+        </div>
+      </div>
+
+
+    </div>
+  </section>
+
+
+  <!-- Tabs -->
+  <section id="about">
+    <div class="container">
+      <h3 class="section-heading">ABOUT US</h3>
+      <div class="row">
+        <div class="col-12">
+          <nav>
+            <div class=" nav nav-tabs nav-fill text-center" id="nav-tab" role="tablist">
+              <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab"
+                aria-controls="nav-home" aria-selected="true">Our Goal</a>
+              <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab"
+                aria-controls="nav-profile" aria-selected="false">What We Do Best</a>
+              <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab"
+                aria-controls="nav-contact" aria-selected="false">Why Us</a>
+              <!-- <a class="nav-item nav-link" id="nav-about-tab" data-toggle="tab" href="#nav-about" role="tab" aria-controls="nav-about" aria-selected="false">About</a> -->
+            </div>
+          </nav>
+          <div class="tab-content py-3 px-3 px-sm-0 " id="nav-tabContent">
+            <div class="tab-pane fade show active text-center" id="nav-home" role="tabpanel"
+              aria-labelledby="nav-home-tab">
+              <div class="row">
+                <div class="col-md-7 col-xs-12 mt-4 about-tab text-center">
+                  <span style="font-size: 1.6rem; color: #e7cd60;">DealerGuy</span>
+                  empowers consumers by
+                  <span style="color: #e7cd60"> simplifying their research <br> </span>
+                  with brief and reliable product recommendations and enabling <br>
+                  <span style="color: #e7cd60"> better-informed shopping decisions <br> </span>
+                </div>
+                <div class="col-md-5 col-xs-12 mt-4 mb-4">
+                  <img class="image1" src="/images/startup.jpg" alt="..." width="360px" height="240px">
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+              <div class="row">
+                <!-- <div class="col-5 mt-3 mb-4"> -->
+                <div class="col-lg-5 col-md-5 mt-4">
+                  <img class="image2" src="/images/business1.jpg" alt="..." width="360px" height="240px">
+                </div>
+                <div class="col-lg-7 col-md-7 col-xs-12 mt-4 about-tab">
+                  Our product recommendations are generated automatically by combining
+                  <span style="color: #e7cd60">advanced data technologies and human intelligence, <br> </span>
+                  ensuring the most accurate and unbiased reflection of the <br>
+                  <span style="color: #e7cd60"> saving you time and money! <br> </span>
+                </div>
+
+              </div>
+            </div>
+            <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+              <div class="row">
+                <div class="col-md-7 col-xs-12 mt-4 about-tab">
+                  <span style="font-size: 1.6rem;">DealerGuy</span>
+                  empowers consumers by
+                  <span style="color: #e7cd60"> simplifying their research <br> </span>
+                  with brief and reliable product recommendations and enabling <br>
+                  <span style="color: #e7cd60"> better-informed shopping decisions <br> </span>
+                </div>
+                <div class="col-md-5 mt-4 mb-4">
+                  <img class="image3" src="/images/online-shopping.jpg" alt="..." width="220px" height="240px">
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="nav-about" role="tabpanel" aria-labelledby="nav-about-tab">
+              Et et consectetur ipsum labore excepteur est proident excepteur ad velit occaecat qui minim occaecat
+              veniam. Fugiat veniam incididunt anim aliqua enim pariatur veniam sunt est aute sit dolor anim. Velit non
+              irure adipisicing aliqua ullamco irure incididunt irure non esse consectetur nostrud minim non minim
+              occaecat. Amet duis do nisi duis veniam non est eiusmod tempor incididunt tempor dolor ipsum in qui sit.
+              Exercitation mollit sit culpa nisi culpa non adipisicing reprehenderit do dolore. Duis reprehenderit
+              occaecat anim ullamco ad duis occaecat ex.
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- ./Tabs -->
+
+  <!-- FAQ -->
+
+  <section class="white-section" id="faq">
+    <h3 class="section-heading">FREQUENT ASKING QUESTIONS</h3>
+    <div class="container">
+      <div class="accordion">
+
+        <div class="accordion-item">
+          <a>Who is DealerGuy?</a>
+          <div class="content">
+            <p>
+              DealerGuy is a personal full stack responsive project, built by Noam Kanonich.<br>
+              The project involve JavaScript, Node.js, Express, HTML, CSS, MongoDB, Rate Limiter and more.
+            </p>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <a>What does DealerGuy do?</a>
+          <div class="content">
+            <p>By searching a product, DealerGuy will give you the best top 10 products list from Amazon<br>
+              and from eBay, with relevent information and data to help you make the right decisions <br>
+              before buying the product.
+            </p>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <a>Does DealerGuy provide an API?</a>
+          <div class="content">
+            <p>Yes, DealerGuy has two different APIs :
+              <br> 1. Amazon 10 best products, given a product name.
+              <br> 2. eBay 10 best products, given a product name.
+            </p>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <a>How can I recieve the best results?</a>
+          <div class="content">
+            <p>You don't need to worry about that, DealerGuy will do all the work for getting<br>
+              you the best results out there.</p>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <a>How to create a profile?</a>
+          <div class="content">
+            <p>To create a new profile, you need to click on the small user icon which located inside the navbar,
+             <br> and then click on "register" at the bottom of the window.
+            </p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- Contact Section -->
+
+  <section class="colored-section" id="contact">
+    <h2 class="section-heading">CONTACT US</h2>
+
+    <div class="container">
+
+      <!-- <button class="download-button btn btn-lg btn-dark" type="button"><i class="fab fa-apple"></i> Download</button>
+      <button class="download-button btn btn-lg brn-light" type="button"><i class="fab fa-google-play"></i> Download</button>
+       -->
+      <!-- <div class="container-fluid"> -->
+      <div class="pricing-column">
+        <div class="card">
+          <div class="card-header">
+            <h3>We want to hear from you!</h3>
+          </div>
+          <div class="card-body">
+            <!-- <p>Pirority Listing</p> -->
+            <form action="/contact" method="POST" id="contact-form">
+              <input class="form-control sm-2 pt-2 pb-2 mb-4" type="text" name="fullname" placeholder="Full Name"
+                aria-label="Full Name" required="required" oninput="this.setCustomValidity('')"
+                oninvalid="this.setCustomValidity('Full name is empty')">
+              <input class="form-control sm-2 pt-2 pb-2 mb-4" type="text" name="phone" placeholder="Phone Number"
+                aria-label="Phone Number">
+              <input class="form-control sm-2 pt-2 pb-2 mb-4" type="email" name="email" id="exampleInputEmail1"
+                aria-describedby="emailHelp" placeholder="Enter email" required>
+              <textarea class="form-control sm-2 pt-2 pb-2 mb-4" rows="4" type="text" name="message"
+                placeholder="Your Message..." required="required" oninput="this.setCustomValidity('')"
+                oninvalid="this.setCustomValidity('Your message is empty')"></textarea>
+              <button class="btn btn-lg btn-dark" type="submit">Send</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+
+  <!-- Footer -->
+
+  <footer class="white-section" id="footer">
+    <div class="container-fluid">
+      <i class="social-icon fab fa-facebook fa-2x"></i>
+      <i class="social-icon fab fa-twitter fa-2x"></i>
+      <i class="social-icon fab fa-instagram fa-2x"></i>
+      <i class="social-icon fas fa-envelope fa-2x"></i>
+      <p>© Copyright 2020 DealerGuy</p>
+    </div>
+  </footer>
+
+  <script src="js/index.js"></script>
+
+</body>
+
+</html>

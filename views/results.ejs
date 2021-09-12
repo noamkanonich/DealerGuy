@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Results</title>
+
+  <!-- Favicon-->
+  <link rel="icon" href="images/favicon.ico" />
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat|Ubuntu" rel="stylesheet">
+
+  <!-- CSS Stylesheets -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="css/styles.css">
+
+  <!-- Font Awesome -->
+  <script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
+
+  <!-- Bootstrap Scripts -->
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+  <section class="colored-section" id="results-title">
+
+    <div class="container">
+
+      <!-- Nav Bar -->
+
+      <nav class="navbar navbar-expand-lg navbar-dark">
+
+        <a class="navbar-brand" href="/"><span class="dealer">Dealer</span>.Guy</a>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+
+          <ul class="navbar-nav ml-auto">
+            <li>
+              <form class="form-inline my-2 my-lg-0" action="/results" method="POST" id="search-form">
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="input-group">
+                        <input class="form-control pd-2 pt-2" type="search" name="productName" placeholder="Search"
+                          aria-label="Search" size="20">
+                        <button class="search btn btn-dark pr-3 pl-3" type="submit"><i class="fas fa-search"></i></button>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </li>
+            
+            
+            <% if (user === undefined){ %>
+
+              <li class="nav-item">
+                <a class="nav-link" data-toggle="modal" data-target="#loginModal">
+                    <i class="fa fa-user fa-lg" aria-hidden="true">
+  
+                    </i>
+                </a>
+             </li>
+  
+            <% } else {%>
+  
+            <li class="nav-item">
+                <a class="nav-link">
+                  <div class="dropdown ">
+                    <i class="fa fa-user fa-lg" aria-hidden="true"></i>
+                      <div class="dropdown-content text-right">
+                        <a class="first" href="profile">My Profile</a>
+                        <a class="second" href="signout">Sign Out</a>
+  
+                      </div>
+                  </div>
+                </a>
+            </li>
+  
+            <% } %>
+
+
+          </ul>
+
+        </div>
+      </nav>
+
+      <!-- Title -->
+
+      <div class="row">
+        <div class="col-12">
+            <h1 class="big-heading text-left"><span style="color:#e7cd60">10 BEST</span><br> <%= productName %>s <small class="date">of <%= date %> 2020</small></h1>
+            <!-- <p class="text-left" style="color: white; font-size:24px">Total Reviews - </p> -->
+          </div>
+      </div>
+
+    </div>
+
+  </section>
+
+
+
+  <section id="products-results">
+    <div class="container">
+      <h3 class="section-title">Search Results</h3>
+      <div class="row">
+        <div class="col-xs-12 ">
+          <nav>
+            <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+              <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Amazon</a>
+              <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">eBay</a>
+              <!-- <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Contact</a> -->
+            </div>
+          </nav>
+          <div class="tab-content py-4 px-4 px-sm-0" id="nav-tabContent">
+            <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+
+              <div class="space"></div>
+              <% if(amazon_products.length === 0){ %>
+                <h1>No products found!</h1>
+            <%  } else { %>
+                    
+            <% for(i = 0 ; i < 10 ; i++) { %>
+
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="card">
+                    <span class="circle"> <%= i + 1 %> </span>
+                    <div class="row no-gutters">
+                      <div class="col-md-2">
+                        <img src="<%= amazon_products[i].image %>" class="card-img" alt="...">
+                      </div>
+
+                      <div class="col-md-7 text-left">
+                        <div class="card-body">
+                          <h5 class="card-title"> <%= amazon_products[i].name %> </h5>
+                          <p class="price">$129.90</p>
+
+                          <button type="button" id="info" class="info btn btn-outline-dark  search-button my-2 my-sm-0" 
+                          onclick="hideDiv()">
+                            <i class="fa fa-arrow-down" aria-hidden="true"></i> 
+                            More Info </button>
+                            
+                        </div>
+                      </div>
+                      <div class="col-md-3 container view-deals">
+                        <p class="score"> <%= amazon_products[i].score %> </p>
+                        <p class="card-text"> <%= amazon_products[i].review %> Reviews </p>
+                        <div class="deals">
+                          <a href="https://www.amazon.com<%= amazon_products[i].deal %>" class="btn btn-dark my-2 my-sm-0 deal-button"> View Deal</a>
+                          <a href="https://www.amazon.com/gp/aws/cart/add.html?&ASIN.1=<%= amazon_products[i].deal.substring(amazon_products[i].deal.indexOf('/dp/') + 4, amazon_products[i].deal.indexOf('/ref')) %>&OfferListingId.1=0429P59IEE4&Quantity.1=1" class="btn btn-dark my-2 my-sm-0 cart-button"><i class="fa fa-shopping-cart"></i></a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+              <div id="info-div">
+                <div class="row">
+                  <div class="col-lg-12">
+                    <div class="card">
+                      <div class="card-body">
+                          <div class="text-left">
+                            <h3>Product Highlitghes - <%= amazon_products[i].name %></h3>
+                            <ul>
+                              <li>sdasadsdasadsdaA</li>
+                              <li>sdasadsdasadsdaA</li>
+                            </ul>
+                          </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="space"></div>
+
+            <% } %>
+          <% } %>  
+
+            </div>
+
+            
+
+            
+            <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+              <div class="space"></div>
+
+              <% if(ebay_products.length === 0){ %>
+                <h1>No products found!</h1>
+            <%  } else { %>
+                    
+            <% for(i = 0 ; i < 10 ; i++) { %>
+
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="card">
+                    <span class="circle"> <%= i + 1 %> </span>
+                    <div class="row no-gutters">
+                      <div class="col-md-2">
+                        <img src="<%= ebay_products[i].image %>" class="card-img" alt="...">
+                      </div>
+
+                      <div class="col-md-7 text-left">
+                        <div class="card-body">
+                          <h5 class="card-title"> <%= ebay_products[i].name %> </h5>
+                          <p class="price"> <%= ebay_products[i].price %> </p>
+
+                          <button type="button" id="info" class="info btn btn-outline-dark  search-button my-2 my-sm-0" onclick="hideDiv()">
+                            <i class="fa fa-arrow-down" aria-hidden="true"></i>
+                            More Info </button>
+                            
+                        </div>
+                      </div>
+                      <div class="col-md-3 container view-deals">
+                        <p class="score"> <%= ebay_products[i].score %> </p>
+                        <p class="card-text"> <%= ebay_products[i].review %> Reviews </p>
+                        <div class="deals">
+                          <!-- var b = a.substring(a.indexOf('/dp/') + 4, a.indexOf('/ref')); -->
+                          <a href="<%= ebay_products[i].deal %>" class="btn btn-dark my-2 my-sm-0 deal-button"> View Deal</a>
+                          <a href="https://www.amazon.com/gp/aws/cart/add.html?&ASIN.1=<%= amazon_products[i].deal.substring(amazon_products[i].deal.indexOf('/dp/') + 4, amazon_products[i].deal.indexOf('/ref')) %>&OfferListingId.1=0429P59IEE4&Quantity.1=1" class="btn btn-dark my-2 my-sm-0 cart-button"><i class="fa fa-shopping-cart"></i></a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="space"></div>
+
+            <% } %>
+          <% } %>  
+
+            </div>
+
+
+            <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+              Et et consectetur ipsum labore excepteur est proident excepteur ad velit occaecat qui minim occaecat veniam. Fugiat veniam incididunt anim aliqua enim pariatur veniam sunt est aute sit dolor anim. Velit non irure adipisicing aliqua ullamco irure incididunt irure non esse consectetur nostrud minim non minim occaecat. Amet duis do nisi duis veniam non est eiusmod tempor incididunt tempor dolor ipsum in qui sit. Exercitation mollit sit culpa nisi culpa non adipisicing reprehenderit do dolore. Duis reprehenderit occaecat anim ullamco ad duis occaecat ex.
+            </div>
+          </div>
+        
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+
+  <!-- Features -->
+<!-- 
+  <section class="white-section" id="results">
+    <div class="container-fluid">
+
+      <div class="bs-example mb-4">
+        <ul class="nav nav-tabs justify-content-center">
+            <li class="nav-item">
+                <a href="#amazon" class="nav-link active" name="amazon" data-toggle="tab">Amazon</a>
+            </li>
+            <li class="nav-item">
+                <a href="#ebay" class="nav-link" name="ebay" data-toggle="tab">eBay</a>
+            </li>
+            <li class="nav-item">
+                <a href="#asos" class="nav-link" name="asos" data-toggle="tab">Ali Express</a>
+            </li>
+        </ul>
+
+        <div class="tab-content">
+            <div class="tab-pane fade show active" id="amazon">
+                <h4 class="mt-2">Amazon</h4>
+
+              <% if(amazon_products.length === 0){ %>
+                  <h1>No products found!</h1>
+              <%  } else { %>
+                      
+              <% for(i = 0 ; i < 10 ; i++) { %>
+
+                <div class="row">
+                  <div class="col-lg-12">
+                    <div class="card">
+                      <span class="circle"> <%= i + 1 %> </span>
+                      <div class="row no-gutters">
+                        <div class="col-md-2">
+                          <img src="<%= amazon_products[i].image %>" class="card-img" alt="...">
+                        </div>
+
+                        <div class="col-md-7 text-left">
+                          <div class="card-body">
+                            <h5 class="card-title"> <%= amazon_products[i].name %> </h5>
+                            <p class="price">$129.90</p>
+
+                            <button type="button" id="info" class="info btn btn-outline-dark  search-button my-2 my-sm-0" 
+                            onclick="hideDiv()">
+                              <i class="fa fa-arrow-down" aria-hidden="true"></i>
+                              More Info </button>
+                              
+                          </div>
+                        </div>
+                        <div class="col-md-3 container view-deals">
+                          <p class="score"> <%= amazon_products[i].score %> </p>
+                          <p class="card-text"> <%= amazon_products[i].review %> Reviews </p>
+
+                          <a href="https://www.amazon.com<%= amazon_products[i].deal %>" class="btn deal my-2 my-sm-0"> View Deal</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="info-div">
+                    <div class="row">
+                      <div class="col-12">
+                        <div class="text-left">
+                          <h3>Product Highlitghes</h3>
+                          <ul>
+                            <li>sdasadsdasadsdaA</li>
+                         
+                          </ul>
+                        </div>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="space"></div>
+
+              <% } %>
+            <% } %>  
+            
+            </div>
+
+            <div class="tab-pane fade" id="ebay">
+                <h4 class="mt-2">eBay</h4>
+                <% if(ebay_products.length === 0){ %>
+                  <h1>No products found!</h1>
+              <%  } else { %>
+                      
+              <% for(i = 0 ; i < 10 ; i++) { %>
+
+                <div class="row">
+                  <div class="col-lg-12">
+                    <div class="card">
+                      <span class="circle"> <%= i + 1 %> </span>
+                      <div class="row no-gutters">
+                        <div class="col-md-2">
+                          <img src="<%= ebay_products[i].image %>" class="card-img" alt="...">
+                        </div>
+
+                        <div class="col-md-7 text-left">
+                          <div class="card-body">
+                            <h5 class="card-title"> <%= ebay_products[i].name %> </h5>
+                            <p class="price"> <%= ebay_products[i].price %> </p>
+
+                            <button type="button" id="info" class="info btn btn-outline-dark  search-button my-2 my-sm-0" onclick="hideDiv()">
+                              <i class="fa fa-arrow-down" aria-hidden="true"></i>
+                              More Info </button>
+                              
+                          </div>
+                        </div>
+                        <div class="col-md-3 container view-deals">
+                          <p class="score"> <%= ebay_products[i].score %> </p>
+                          <p class="card-text"> <%= ebay_products[i].review %> Reviews </p>
+
+                          <a href="<%= ebay_products[i].deal %>" class="btn deal my-2 my-sm-0"> View Deal</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="space"></div>
+
+              <% } %>
+            <% } %>  
+            
+            </div>
+
+
+            <div class="tab-pane fade" id="asos">
+                <h4 class="mt-2">Messages tab content</h4>
+                <p>Donec vel placerat quam, uleiimperdiet. Cum soc magnis.</p>
+            </div>
+        </div>
+    </div>
+ -->
+
+
+
+
+
+
+
+
+
+
+
+      <!-- PRODUCTS LIST -->
+      <!-- <div class="row">
+        <div class="col-lg-12">
+          
+          <div class="card">
+            <span class="circle">1</span>
+            <div class="row no-gutters">
+              <div class="col-md-2 container " >
+                <img src="/images/laptop.png" class="card-img" alt="..." height="170" style="width: 75%;">
+              </div>
+              <div class="col-md-7 text-left">
+                
+                <div class="card-body">
+                  <h5 class="card-title">DELL XPS 11</h5>
+                  <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
+                    additional content. This content is a little bit longer.</p>
+                  <p class="price">$129.90</p>
+
+                  <button type="button" id="info" class="info btn btn-outline-dark  search-button my-2 my-sm-0" onclick="hideDiv()">
+                    <i class="fa fa-arrow-down" aria-hidden="true"></i>
+                    More Info </button>
+                </div>
+              </div>
+              <div class="col-md-3 container view-deals">
+                <p class="score">9.2</p>
+                <a href="www.amazon.com" class="btn deal my-2 my-sm-0">View Deal</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div> -->
+
+      <!-- Info Div -->
+      <!-- <div id="info-div">
+        <div class="row">
+          <div class="col-12">
+            <div class="text-left">
+              <h3>Product Highlitghes</h3>
+              <ul>
+                <li>sdasadsdasadsdaA</li>
+                <li>A</li>
+                <li>A</li>
+              </ul>
+            </div>
+            </div>
+        </div>
+      </div>
+
+      <div class="space"></div>
+
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="card">
+            <span class="circle">2</span>
+            <div class="row no-gutters">
+              <div class="col-md-2">
+                <img src="/images/iphone.png" class="card-img" alt="..." height="170" style="width: 75%;">
+              </div>
+              <div class="col-md-7 text-left">
+                <div class="card-body">
+                  <h5 class="card-title">Iphone 11</h5>
+                  <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
+                    additional content. This content is a little bit longer.</p>
+                  <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                  <p class="price">$129.90</p>
+
+                  <button type="button" id="info" class="info btn btn-outline-dark  search-button my-2 my-sm-0" onclick="hideDiv()">
+                    <i class="fa fa-arrow-down" aria-hidden="true"></i>
+                    More Info </button>
+                </div>
+              </div>
+              <div class="col-md-3 container view-deals">
+                <p class="score">9.2</p>
+                <button type="submit" class="btn deal my-2 my-sm-0"> View Deal</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div> -->
+
+       <!-- Info Div -->
+       <!-- <div id="info-div">
+        <div class="row">
+          <div class="col-12">
+            <div class="text-left">
+              <h3>Product Highlitghes</h3>
+              <ul>
+                <li>sdasadsdasadsdaA</li>
+                <li>A</li>
+                <li>A</li>
+              </ul>
+            </div>
+            </div>
+        </div>
+      </div>
+
+      <div class="space"></div>
+
+      <div class="row ">
+        <div class="col-lg-12">
+          <div class="card">
+            <span class="circle">3</span>
+            <div class="row no-gutters">
+              <div class="col-md-2">
+                <img src="/images/xbox.png" class="card-img" alt="..." height="160" style="width: 80%;">
+              </div>
+              <div class="col-md-7 text-left">
+                <div class="card-body">
+                  <h5 class="card-title">Xbox One S</h5>
+                  <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
+                    additional content. This content is a little bit longer.</p>
+                  <p class="price">$129.90</p>
+
+                  <button type="submit" class="btn btn-dark search-button my-2 my-sm-0"> More Info </button>
+
+                </div>
+              </div>
+              <div class="col-md-3 container view-deals">
+                <p class="score">9.2</p>
+                <button type="submit" class="btn btn-dark search-button my-2 my-sm-0"> View Deal</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="space"></div>
+
+
+
+    </div>
+  </div>
+
+  
+  </section> -->
+
+
+  <!-- Testimonials -->
+<!-- 
+  <section class="colored-section" id="testimonials">
+    <div class="container">
+      <h2 class="section-heading">Random Reviews | <%= productName %></h2>
+
+      <div id="testimonial-carousel" class="carousel slide" data-ride="false">
+        <div class="carousel-inner">
+          <div class="carousel-item active container-fluid">
+            <h2 class="testimonial-text">I no longer have to sniff other dogs for love. I've found the hottest Corgi on
+              TinDog. Woof.</h2>
+            <img class="testimonial-image" src="images/dog-img.jpg" alt="dog-profile">
+            <em>Pebbles, New York</em>
+          </div>
+          <div class="carousel-item container-fluid">
+            <h2 class="testimonial-text">My dog used to be so lonely, but with TinDog's help, they've found the love of
+              their life. I think.</h2>
+            <img class="testimonial-image" src="images/lady-img.jpg" alt="lady-profile">
+            <em>Beverly, Illinois</em>
+          </div>
+        </div>
+        <a class="carousel-control-prev" href="#testimonial-carousel" role="button" data-slide="prev">
+          <span class="carousel-control-prev-icon"></span>
+        </a>
+        <a class="carousel-control-next" href="#testimonial-carousel" role="button" data-slide="next">
+          <span class="carousel-control-next-icon"></span>
+        </a>
+      </div>
+  
+    </div>
+    
+  </section> -->
+
+
+
+  <!-- Related Products -->
+
+  <section class="midway-section" id="related">
+
+    <h2 class="section-heading">Related Products You Might Like</h2>
+    <p>Check out more products you might find usful for you!</p>
+
+    <div class="row">
+
+      <div class="pricing-column col-lg-3 col-md-4">
+        <div class="card">
+          <div class="card-header">
+            <h3><%= four_related[0] %></h3>
+          </div>
+          <div class="card-body">
+            <img src="<%= four_images[0] %>" class="card-img" alt="..." height="180" style="width: 50%;">
+            <form action="/results" method="POST">
+              <input type="hidden" name="moreProductsName" value="<%= four_related[0] %>" placeholder="Search" aria-label="Search" size="40">
+              <button class="btn btn-lg btn-block btn-outline-dark" type="submit">View More</button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="pricing-column col-lg-3 col-md-4">
+        <div class="card">
+          <div class="card-header">
+            <h3><%= four_related[1] %></h3>
+          </div>
+          <div class="card-body">
+            <img src="<%= four_images[1] %>" class="card-img" alt="..." height="180" style="width: 60%;">
+
+            <form action="/results" method="POST">
+              <input type="hidden" name="moreProductsName" value="<%= four_related[1] %>" placeholder="Search" aria-label="Search" size="40">
+              <button class="btn btn-lg btn-block btn-outline-dark" type="submit">View More</button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div class="pricing-column col-lg-3 col-md-4">
+        <div class="card">
+          <div class="card-header">
+            <h3><%= four_related[2] %></h3>
+          </div>
+          <div class="card-body">
+            <img src="<%= four_images[2] %>" class="card-img" alt="..." height="180" style="width: 60%;">
+
+            <form action="/results" method="POST">
+              <input type="hidden" name="moreProductsName" value="<%= four_related[2] %>" placeholder="Search" aria-label="Search" size="40">
+              <button class="btn btn-lg btn-block btn-outline-dark" type="submit">View More</button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div class="pricing-column col-lg-3 col-md-4">
+        <div class="card">
+          <div class="card-header">
+            <h3><%= four_related[3] %></h3>
+          </div>
+          <div class="card-body">
+            <img src="<%= four_images[3] %>" class="card-img" alt="..." height="180" style="width: 60%;">
+
+            <form action="/results" method="POST">
+              <input type="hidden" name="moreProductsName" value="<%= four_related[3] %>" placeholder="Search" aria-label="Search" size="40">
+              <button class="btn btn-lg btn-block btn-outline-dark" type="submit">View More</button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+  </section>
+
+  <div style="background-color: white; height: 120px"></div>
+
+  <!-- Contact Section -->
+
+  <section class="contact-section" id="contact">
+    <h2 class="section-heading">CONTACT US</h2>
+    <div class="container">
+      <div class="pricing-column">
+        <div class="card">
+          <div class="card-header">
+            <h3>Send us a message!</h3>
+          </div>
+          <div class="card-body">
+            <form action="/contact" method="POST" id="contact-form">
+              <input class="form-control sm-2 pt-2 pb-2 mb-4" type="text" name="fullname" placeholder="Full Name"
+                aria-label="Full Name" required="required" 
+                oninput="this.setCustomValidity('')" oninvalid="this.setCustomValidity('Full name is empty')">
+              <input class="form-control sm-2 pt-2 pb-2 mb-4" type="text" name="phone" placeholder="Phone Number"
+                aria-label="Phone Number">
+              <input class="form-control sm-2 pt-2 pb-2 mb-4" type="email" name="email" id="exampleInputEmail1"
+                aria-describedby="emailHelp" placeholder="Enter email" required>
+              <textarea class="form-control sm-2 pt-2 pb-2 mb-4" rows="4" type="text" name="message"
+                placeholder="Your Message..." required="required" 
+                oninput="this.setCustomValidity('')" oninvalid="this.setCustomValidity('Your message is empty')"></textarea>
+              <button class="btn btn-lg btn-dark" type="submit">Send</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+
+  <!-- Footer -->
+
+  <footer class="white-section" id="footer">
+    <div class="container-fluid">
+      <i class="social-icon fab fa-facebook-f fa-2x"></i>
+      <i class="social-icon fab fa-twitter fa-2x"></i>
+      <i class="social-icon fab fa-instagram fa-2x"></i>
+      <i class="social-icon fas fa-envelope fa-2x"></i>
+      <p>© Copyright 2020 DealerGuy</p>
+    </div>
+  </footer>
+
+  <script src="js/index.js"></script>
+  <script src="js/scarping.js"></script>
+
+</body>
+
+</html>
