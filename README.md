@@ -1,3 +1,5 @@
 # DealerGuy
-A complex web scraping project, which developed by using Node.js, MongoDB, JavaScript, HTML, CSS, EJS.
-DealerGuy has 
+DealerGuy is a complex web scraping project, which provides you with the 10 most popular product results from Amazon and eBay.
+DealerGuy was developed by using Node.js, Express, Passport, MongoDB, JavaScript, HTML, CSS, EJS, Cheerio and more.
+
+# How To Start
