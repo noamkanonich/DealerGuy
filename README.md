@@ -3,6 +3,7 @@ DealerGuy is a complex web scraping project, which provides you with the 10 most
 Furthermore, user can register/log-in, edit his profile, and much more.
 DealerGuy was developed by using Node.js, Express, Passport, MongoDB, JavaScript, HTML, CSS, EJS, Cheerio and more.
 
+
 # How To Start
 1. Download the repository zip file.
 2. Open the command line and go to the app's folder location.
