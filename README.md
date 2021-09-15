@@ -13,3 +13,8 @@ DealerGuy was developed by using Node.js, Express, Passport, MongoDB, JavaScript
 
 
 # Screenshots
+![Screenshot](https://user-images.githubusercontent.com/55742997/133468145-c7b1d22f-b6d3-43db-8369-59fc4cbfc6c1.jpg)
+
+![Screenshot2](https://user-images.githubusercontent.com/55742997/133468151-e63f388f-4007-4b21-a16f-cc34918c7c4a.jpg)
+
+![Screenshot3](https://user-images.githubusercontent.com/55742997/133468157-cf0e3a60-f00a-4a62-9e91-cb62d51d10a5.jpg)
