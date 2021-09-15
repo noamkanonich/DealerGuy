@@ -83,10 +83,6 @@ function amazonScraping(response) {
 
 
 
-
-// ///////////////////////////////////////////
-
-
 function productDescription(response) {
     const html = response.data;
     const $ = cheerio.load(html);
@@ -102,10 +98,6 @@ function findHighlights(response) {
     var highlight = $("div.a-section.a-spacing-medium.a-spacing-top-small").find("span").text();
     return highlight
 }
-
-
-// ///////////////////////////////////////////
-
 
 
 
