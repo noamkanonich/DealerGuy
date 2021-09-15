@@ -115,25 +115,25 @@ const amazonUrl = "https://www.amazon.com/s?k=";
 let related_products = [];
 let related_images = [];
 
+
 app.get("/", function (req, res) {
   console.log(req.user)
   res.render("index", { user: req.user });
 });
 
+
 app.post("/", function (req, res) {
-  // var username = req.body.username;
   var email = req.body.email;
   console.log(email)
   User.findOne({ email: email }, function (err, userFound) {
     if (!userFound) {
       res.render("index", { user: undefined });
     } else {
-      // currentUser = userFound;
-      console.log(userFound)
       res.render("index", { user: userFound });
     }
   });
 });
+
 
 app.get("index", function (req, res) {
   User.findOne({ email: req.user.email }, function (userFound) {
@@ -149,6 +149,7 @@ app.get("index", function (req, res) {
 app.get("/products", function(req, res) {
   res.redirect("/");
 })
+
 
 app.post("/products", function (req, res) {
   // if user is login, it will update the history search
@@ -217,9 +218,11 @@ app.post("/products", function (req, res) {
   });
 });
 
+
 app.get("/results", function (req, res) {
   res.redirect("/");
   });
+
 
 app.post("/results", function (req, res) {
   let amazon_list = [];
@@ -269,6 +272,7 @@ app.post("/results", function (req, res) {
   });
 });
 
+
 app.post("/login", function (req, res) {
 
   const user = new User({
@@ -277,8 +281,6 @@ app.post("/login", function (req, res) {
   })
 
   req.login(user, function (err) {
-    console.log("=========")
-    console.log(user)
     if (err) {
       console.log(err);
     }
@@ -296,39 +298,15 @@ app.post("/login", function (req, res) {
   })
 });
 
-// app.post("/register", function (req, res) {
-//   User.register({
-//     email: req.body.email,
-//     name: req.body.fullname,
-//     phone: req.body.phone,
-//     image: "http://ssl.gstatic.com/accounts/ui/avatar_2x.png",
-//     registerDate: String(new Date()).slice(4, 15),
-//     history: []
-//   }, req.body.password, function (err, newUser) {
-//     if (err) {
-//       console.log(err);
-//       res.redirect("/");
-//     }
-//     else {
-//       passport.authenticate("local")(req, res, function () {
-//         res.render("profile", { user: newUser })
-//       })
-//     }
-//   })
-// });
-
 
 app.post("/register", function (req, res) {
   User.register({ email: req.body.email }, req.body.password, function (err, newUser) {
       if (err) {
-
           console.log(err);
           res.redirect("/");
       }
       else {
           passport.authenticate("local")(req, res, function () {
-            console.log("asdadqw2d121d")
-
             console.log(newUser)
             res.redirect("profile");
           })
@@ -343,6 +321,7 @@ app.get("/signout", function (req, res) {
   res.redirect("/");
 });
 
+
 app.post("/contact", function (req, res) {
   var newContact = new Contact({
     name: req.body.fullname,
@@ -355,9 +334,9 @@ app.post("/contact", function (req, res) {
   res.redirect("/");
 });
 
+
 app.get("/profile", function (req, res) {
   // res.render("profile", { user: currentU;ser });
-  console.log(req.body.email);
   if (req.isAuthenticated()) {
     User.findById(req.user.id, function (err, userFound) {
       if (err) {
@@ -372,6 +351,7 @@ app.get("/profile", function (req, res) {
     res.redirect("/");
   }
 });
+
 
 app.post("/profile", function (req, res) {
   var img_url = req.body.url;
@@ -397,8 +377,8 @@ app.post("/profile", function (req, res) {
       res.redirect("profile");
     }
   });
-  // res.redirect("/");
 });
+
 
 app.listen(3000, function () {
   console.log("Server started on port 3000");
